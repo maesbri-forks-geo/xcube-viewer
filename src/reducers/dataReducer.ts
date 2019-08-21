@@ -1,5 +1,5 @@
 import * as ol from 'openlayers';
-
+import deepEqual  from 'deep-equal';
 import { DataState, newDataState, storeUserServers } from '../states/dataState';
 import {
     CONFIGURE_SERVERS,
@@ -20,7 +20,10 @@ export function dataReducer(state: DataState, action: DataAction): DataState {
     }
     switch (action.type) {
         case UPDATE_DATASETS: {
-            return {...state, datasets: action.datasets};
+            if (action.initial || !deepEqual(state.datasets, action.datasets)) {
+                return {...state, datasets: action.datasets};
+            }
+            return state;
         }
         case UPDATE_DATASET_PLACE_GROUP: {
             const datasetIndex = state.datasets.findIndex(ds => ds.id === action.datasetId);

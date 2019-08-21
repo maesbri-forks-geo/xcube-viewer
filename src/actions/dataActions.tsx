@@ -28,17 +28,19 @@ export type UPDATE_DATASETS = typeof UPDATE_DATASETS;
 export interface UpdateDatasets {
     type: UPDATE_DATASETS;
     datasets: Dataset[];
+    initial: boolean;
 }
 
 export function updateDatasets() {
-    return (dispatch: Dispatch<UpdateDatasets | SelectDataset | AddActivity | RemoveActivity | MessageLogAction>, getState: () => AppState) => {
+    return (dispatch: Dispatch<UpdateDatasets | SelectDataset | AddActivity | RemoveActivity | MessageLogAction>,
+            getState: () => AppState) => {
         const apiServer = selectedServerSelector(getState());
 
         dispatch(addActivity(UPDATE_DATASETS, I18N.get('Loading data')));
 
         api.getDatasets(apiServer.url)
            .then((datasets: Dataset[]) => {
-               dispatch(_updateDatasets(datasets));
+               dispatch(_updateDatasets(datasets, true));
                if (datasets.length > 0) {
                    dispatch(selectDataset(datasets[0].id, datasets));
                }
@@ -46,15 +48,31 @@ export function updateDatasets() {
            .catch(error => {
                dispatch(postMessage('error', error + ''));
            })
-           // 'then' because Microsoft Edge does not understand method finally
+           // 'then' because Microsoft Edge does not yet understand keyword "finally"
            .then(() => {
                dispatch(removeActivity(UPDATE_DATASETS));
            });
     };
 }
 
-export function _updateDatasets(datasets: Dataset[]): UpdateDatasets {
-    return {type: UPDATE_DATASETS, datasets};
+export function updateDatasetsDelta(callback: () => void) {
+    return (dispatch: Dispatch<UpdateDatasets | SelectDataset | AddActivity | RemoveActivity | MessageLogAction>,
+            getState: () => AppState) => {
+        const apiServer = selectedServerSelector(getState());
+        api.getDatasets(apiServer.url)
+           .then((datasets: Dataset[]) => {
+               dispatch(_updateDatasets(datasets, false));
+           })
+           .catch(error => {
+               console.warn('failed to retrieve datasets delta:', error)
+           })
+           // 'then' because Microsoft Edge does not yet understand keyword "finally"
+           .then(callback);
+    };
+}
+
+export function _updateDatasets(datasets: Dataset[], initial: boolean): UpdateDatasets {
+    return {type: UPDATE_DATASETS, datasets, initial};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

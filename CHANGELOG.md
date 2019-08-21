@@ -1,6 +1,7 @@
 
 ## Changes in version 0.2 (in dev.)
 
+* Querying the server for configuration changes then update datasets and variables accordingly. (#15)
 * Removed dummy app bar icons ("Notifications", "Avatar") and menu entry ("Settings...")
 * Place groups dropdown menus are no longer displayed if a dataset has no 
   place groups and the places dropdown is no longer shown if no place group is selected. 

@@ -20,6 +20,9 @@ export const VIEWER_API_SERVERS = [
     {...VIEWER_DEFAULT_API_SERVER},
 ];
 
+// every 10 seconds ask server for updates
+export const VIEWER_UPDATE_INTERVAL = 10000;
+
 export const VIEWER_THEME = 'dark';
 export const VIEWER_PRIMARY_COLOR = blue;
 export const VIEWER_SECONDARY_COLOR = pink;

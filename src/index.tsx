@@ -4,12 +4,14 @@ import * as ReactDOM from 'react-dom';
 import * as Redux from 'redux';
 import thunk from 'redux-thunk';
 import * as ReduxLogger from 'redux-logger';
+
 import { appReducer } from './reducers/appReducer';
-import { updateDatasets, updateColorBars } from './actions/dataActions';
+import { updateDatasets, updateColorBars, updateDatasetsDelta } from './actions/dataActions';
 import { changeLocale } from "./actions/controlActions";
 import App from './connected/App';
 import registerServiceWorker from './registerServiceWorker';
 import { getCurrentLocale } from "./util/lang";
+import { VIEWER_UPDATE_INTERVAL } from './config';
 
 import './index.css';
 
@@ -28,3 +30,11 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
+
+const updateDatasetsDeltaCallback = () => {
+    window.setTimeout(() => {
+        store.dispatch(updateDatasetsDelta(updateDatasetsDeltaCallback) as any);
+    }, VIEWER_UPDATE_INTERVAL);
+};
+
+updateDatasetsDeltaCallback();
