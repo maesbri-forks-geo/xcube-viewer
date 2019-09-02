@@ -14,11 +14,11 @@ import {
 } from 'recharts';
 import { Theme, createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import ZoomOutMap from '@material-ui/icons/ZoomOutMap';
-import Close from '@material-ui/icons/Close';
+import AllOutIcon from '@material-ui/icons/AllOut';
+import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import { equalTimeRanges, Time, TimeRange, TimeSeriesGroup, TimeSeriesPoint } from '../model/timeSeries';
+import { equalTimeRanges, Time, TimeRange, TimeSeries, TimeSeriesGroup, TimeSeriesPoint } from '../model/timeSeries';
 import { utcTimeToLocalDateString, utcTimeToLocalDateTimeString } from '../util/time';
 import {
     I18N,
@@ -26,28 +26,29 @@ import {
     LINE_CHART_STROKE_SHADE_LIGHT_THEME,
     USER_PLACES_COLORS
 } from '../config';
-import { WithLocale } from "../util/lang";
+import { WithLocale } from '../util/lang';
+import { PlaceInfo } from "../model/place";
 
 
 const styles = (theme: Theme) => createStyles(
     {
         chartContainer: {
-            userSelect: 'none',
+            // userSelect: 'none',
             position: 'relative',
-            width: "99%",
+            width: '99%',
             height: '40vh',
         },
         zoomOutButton: {
             position: 'absolute',
-            right: 8 * theme.spacing.unit,
-            margin: theme.spacing.unit,
+            right: 8 * theme.spacing(1),
+            margin: theme.spacing(1),
             zIndex: 1000,
             opacity: 0.8,
         },
         removeTimeSeriesGroup: {
             position: 'absolute',
-            right: theme.spacing.unit,
-            margin: theme.spacing.unit,
+            right: theme.spacing(1),
+            margin: theme.spacing(1),
             zIndex: 1000,
             opacity: 0.8,
         },
@@ -56,15 +57,15 @@ const styles = (theme: Theme) => createStyles(
             opacity: 0.8,
             color: 'white',
             border: '2px solid black',
-            borderRadius: theme.spacing.unit * 2,
-            padding: theme.spacing.unit * 1.5,
+            borderRadius: theme.spacing(2),
+            padding: theme.spacing(1.5),
         },
         toolTipValue: {
             fontWeight: 'bold',
         },
         toolTipLabel: {
             fontWeight: 'bold',
-            paddingBottom: theme.spacing.unit,
+            paddingBottom: theme.spacing(1),
         },
         chartTitle: {}
     });
@@ -80,7 +81,14 @@ interface TimeSeriesChartProps extends WithStyles<typeof styles>, WithLocale {
     selectedTimeRange?: TimeRange | null;
     selectTimeRange?: (timeRange: TimeRange | null) => void;
 
+    showPointsOnly: boolean;
+    showErrorBars: boolean;
+
+    selectTimeSeries?: (timeSeriesGroupId: string, timeSeriesIndex: number, timeSeries: TimeSeries) => void;
+
     removeTimeSeriesGroup?: (id: string) => void;
+
+    placeInfos?: { [placeId: string]: PlaceInfo };
 }
 
 interface TimeSeriesChartState {
@@ -102,7 +110,10 @@ class TimeSeriesChart extends React.Component<TimeSeriesChartProps, TimeSeriesCh
     }
 
     render() {
-        const {classes, timeSeriesGroup, selectedTime, selectedTimeRange, dataTimeRange, theme} = this.props;
+        const {
+            classes, timeSeriesGroup, selectedTime, selectedTimeRange,
+            dataTimeRange, theme, placeInfos, showErrorBars, showPointsOnly,
+        } = this.props;
 
         const strokeShade = theme.palette.type === 'light' ? LINE_CHART_STROKE_SHADE_LIGHT_THEME : LINE_CHART_STROKE_SHADE_DARK_THEME;
         const lightStroke = theme.palette.primary.light;
@@ -118,6 +129,25 @@ class TimeSeriesChart extends React.Component<TimeSeriesChartProps, TimeSeriesCh
         }
 
         const lines = timeSeriesGroup.timeSeriesArray.map((ts, i) => {
+
+            const source = ts.source;
+            let lineName = source.variableName;
+            let lineColor = 'yellow';
+            if (placeInfos) {
+                const placeInfo = placeInfos[source.placeId];
+                if (placeInfo) {
+                    const {place, placeLabel} = placeInfo;
+                    if (place.geometry.type === 'Point') {
+                        const lon = place.geometry.coordinates[0];
+                        const lat = place.geometry.coordinates[1];
+                        lineName += ` (${placeLabel}: ${lat.toFixed(5)},${lon.toFixed(5)})`;
+                    } else {
+                        lineName += ` (${placeLabel})`;
+                    }
+                    lineColor = (place.properties || {}) ['color'] || lineColor;
+                }
+            }
+
             const data: TimeSeriesPoint[] = [];
             let hasErrorBars = false;
             ts.data.forEach(point => {
@@ -132,39 +162,38 @@ class TimeSeriesChart extends React.Component<TimeSeriesChartProps, TimeSeriesCh
                     }
                     if (time1Ok && time2Ok) {
                         data.push(point);
-                    }
-                    // noinspection SuspiciousTypeOfGuard
-                    if ((typeof point.uncertainty) === "number") {
-                        hasErrorBars = true;
+                        // noinspection SuspiciousTypeOfGuard
+                        if ((typeof point.uncertainty) === 'number') {
+                            hasErrorBars = true;
+                        }
                     }
                 }
             });
             let errorBar;
-            if (hasErrorBars) {
+            if (showErrorBars && hasErrorBars) {
                 errorBar = (
                     <ErrorBar
                         dataKey="uncertainty"
                         width={4}
                         strokeWidth={2}
-                        stroke={USER_PLACES_COLORS[ts.color][strokeShade]}
+                        stroke={USER_PLACES_COLORS[lineColor][strokeShade]}
                     />
                 );
             }
-            const source = ts.source;
             return (
                 <Line
                     key={i}
                     type="monotone"
-                    name={source.variableName}
+                    name={lineName}
                     unit={source.variableUnits}
                     data={data}
                     dataKey="average"
-                    connectNulls={true}
                     dot={true}
-                    stroke={USER_PLACES_COLORS[ts.color][strokeShade]}
-                    strokeWidth={3 * (ts.dataProgress || 1)}
                     activeDot={true}
+                    stroke={showPointsOnly ? '#00000000' : USER_PLACES_COLORS[lineColor][strokeShade]}
+                    strokeWidth={3 * (ts.dataProgress || 1)}
                     isAnimationActive={ts.dataProgress === 1.0}
+                    onClick={() => this.handleTimeSeriesClick(timeSeriesGroup.id, i, ts)}
                 >{errorBar}</Line>
             );
         });
@@ -193,7 +222,7 @@ class TimeSeriesChart extends React.Component<TimeSeriesChartProps, TimeSeriesCh
                     aria-label="Zoom Out"
                     onClick={this.handleZoomOutButtonClick}
                 >
-                    <ZoomOutMap/>
+                    <AllOutIcon/>
                 </IconButton>
             );
             actionButtons.push(zoomOutButton);
@@ -206,13 +235,13 @@ class TimeSeriesChart extends React.Component<TimeSeriesChartProps, TimeSeriesCh
                 aria-label="Close"
                 onClick={this.handleRemoveTimeSeriesGroupClick}
             >
-                <Close/>
+                <CloseIcon/>
             </IconButton>
         );
         actionButtons.push(removeAllButton);
 
-        const timeSeriesText = I18N.get("Time-Series");
-        const unitsText = timeSeriesGroup.variableUnits || I18N.get("unknown units");
+        const timeSeriesText = I18N.get('Time-Series');
+        const unitsText = timeSeriesGroup.variableUnits || I18N.get('unknown units');
         const chartTitle = `${timeSeriesText} (${unitsText})`;
 
         // 99% per https://github.com/recharts/recharts/issues/172
@@ -265,6 +294,14 @@ class TimeSeriesChart extends React.Component<TimeSeriesChartProps, TimeSeriesCh
             this.props.selectTime(event.activeLabel);
         }
         this.setState(TimeSeriesChart.clearState());
+    };
+
+    readonly handleTimeSeriesClick = (timeSeriesGroupId: string, timeSeriesIndex: number, timeSeries: TimeSeries) => {
+        const {selectTimeSeries} = this.props;
+        console.log('handleTimeSeriesClick:', timeSeriesGroupId, timeSeriesIndex, timeSeries);
+        if (!!selectTimeSeries) {
+            selectTimeSeries(timeSeriesGroupId, timeSeriesIndex, timeSeries);
+        }
     };
 
     readonly handleMouseDown = (event: any) => {
@@ -382,3 +419,5 @@ class _CustomTooltip extends React.PureComponent<_CustomTooltipProps> {
 }
 
 const CustomTooltip = withStyles(styles)(_CustomTooltip);
+
+

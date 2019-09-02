@@ -14,6 +14,7 @@ import { AppState } from '../states/appState';
 import AppBar from './AppBar';
 import AppPane from './AppPane';
 import LoadingDialog from './LoadingDialog';
+import LegalAgreementDialog from './LegalAgreementDialog';
 import MessageLog from './MessageLog';
 import { VIEWER_PRIMARY_COLOR, VIEWER_SECONDARY_COLOR, VIEWER_THEME } from "../config";
 
@@ -30,14 +31,14 @@ const mapDispatchToProps = {};
 
 const theme = createMuiTheme(
     {
+        typography: {
+            fontSize: 12,
+            htmlFontSize: 14,
+        },
         palette: {
             type: VIEWER_THEME,
             primary: VIEWER_PRIMARY_COLOR,
             secondary: VIEWER_SECONDARY_COLOR,
-        },
-        // see https://material-ui.com/style/typography/#migration-to-typography-v2
-        typography: {
-            useNextVariants: true,
         },
     });
 
@@ -61,6 +62,7 @@ class App extends React.PureComponent<DashboardProps> {
                     <AppPane/>
                     <LoadingDialog/>
                     <MessageLog/>
+                    <LegalAgreementDialog/>
                 </div>
             </MuiThemeProvider>
         );

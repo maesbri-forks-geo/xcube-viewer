@@ -1,6 +1,19 @@
 
 ## Changes in version 0.2 (in dev.)
 
+* Added legal agreement to inform about using HTML local storage. (#77)
+* Users can now generate time series for any selected variable and any selected place. (#50)
+  User places can now be also removed, which will remove related time series too.
+  Removing time series, on the other hand, does no longer remove user added places.
+* Selection of exact time steps has been improved. Introduced new time picker and user can also
+  select move forward and backward in time by single steps. (#58)
+* User can now adjust preferences in a new settings dialog:
+  * xcube servers;
+  * UI language;
+  * whether to connect points by line (#62);
+  * whether to show error bars / whether to compute stdev yes/no;
+  * auto-play speed / time interval in millis;
+  * whether to auto-add time-series chart if point is added (#46).
 * Querying the server for configuration changes then update datasets and variables accordingly. (#15)
 * Removed dummy app bar icons ("Notifications", "Avatar") and menu entry ("Settings...")
 * Place groups dropdown menus are no longer displayed if a dataset has no 

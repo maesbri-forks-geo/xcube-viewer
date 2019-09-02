@@ -19,7 +19,7 @@
       "de": "Abbrechen",
       "it": "Annulla",
       "ro": "Anulare",
-      "se": "Annullera"
+      "se": "Avbryt"
     },
     {
       "en": "Save",
@@ -33,28 +33,28 @@
       "de": "Auswählen",
       "it": "Selezionare",
       "ro": "Selectați",
-      "se": "Välja"
+      "se": "Välj"
     },
     {
       "en": "Add",
       "de": "Hinzufügen",
       "it": "Aggiungere",
       "ro": "Adăuga",
-      "se": "Foga"
+      "se": "Lägg till"
     },
     {
       "en": "Edit",
       "de": "Bearbeiten",
       "it": "Modificare",
       "ro": "Edita",
-      "se": "Edera"
+      "se": "Redigera"
     },
     {
       "en": "Remove",
       "de": "Entfernen",
       "it": "Eliminare",
       "ro": "Elimina",
-      "se": "Avlägsna"
+      "se": "Ta bort"
     },
     {
       "en": "Dataset",
@@ -69,6 +69,20 @@
       "it": "Variabile",
       "ro": "Variabil",
       "se": "Variabel"
+    },
+    {
+      "en": "My places",
+      "de": "Meine Orte",
+      "it": "Miei posti",
+      "ro": "Locurile mele",
+      "se": "Mina platser"
+    },
+    {
+      "en": "Loading places",
+      "de": "Lade Orte",
+      "it": "Caricamento dei posti",
+      "ro": "Încărcarea locuri",
+      "se": "Laddar platser"
     },
     {
       "en": "Places",
@@ -90,6 +104,13 @@
       "it": "Tempo",
       "ro": "Timp",
       "se": "Tid"
+    },
+    {
+      "en": "Point",
+      "de": "Punkt",
+      "it": "Punto",
+      "ro": "Punct",
+      "se": "Punkt"
     },
     {
       "en": "Multi",
@@ -138,14 +159,14 @@
       "de": "Stopp",
       "it": "Fermare",
       "ro": "Stop",
-      "se": "Stanna"
+      "se": "Stopp"
     },
     {
       "en": "Please wait...",
       "de": "Bitte warten...",
       "it": "Attendere prego...",
       "ro": "Te rog asteapta...",
-      "se": "Vänta vänta..."
+      "se": "Vänta ..."
     },
     {
       "en": "Loading data",
@@ -176,6 +197,13 @@
       "se": "Inställningar"
     },
     {
+      "en": "General",
+      "de": "Allgemein",
+      "it": "Generalmente",
+      "ro": "General",
+      "se": "Allmänhet"
+    },
+    {
       "en": "Server",
       "de": "Server",
       "it": "Server",
@@ -187,21 +215,105 @@
       "de": "Server hinzufügen",
       "it": "Aggiungi Server",
       "ro": "Adauga Server",
-      "se": "Lägg till Server"
+      "se": "Lägg till server"
     },
     {
       "en": "Edit Server",
       "de": "Server bearbeiten",
       "it": "Modifica Server",
       "ro": "Editați Serverul",
-      "se": "Redigera Server"
+      "se": "Redigera server"
     },
     {
       "en": "Select Server",
       "de": "Server auswählen",
       "it": "Seleziona Server",
       "ro": "Selectați Server",
-      "se": "Välj Server"
+      "se": "Välj server"
+    },
+    {
+      "en": "On",
+      "de": "An",
+      "it": "Acceso",
+      "ro": "Pornit",
+      "se": "På"
+    },
+    {
+      "en": "Off",
+      "de": "Aus",
+      "it": "Spento",
+      "ro": "Oprit",
+      "se": "Av"
+    },
+    {
+      "en": "Time interval of the player",
+      "de": "Zeitintervall des Abspielers",
+      "it": "Intervallo di tempo del giocatore",
+      "ro": "Intervalul de timp al jucătorului",
+      "se": "Spelarens tidsintervall"
+    },
+    {
+      "en": "Show graph after adding a point",
+      "de": "Grafik anzeigen, nachdem ein Punkt hinzugefügt wurde",
+      "it": "Mostra grafico dopo aver aggiunto un punto",
+      "ro": "Afișează grafic după adăugarea unui punct",
+      "se": "Visa graf efter att ha lagt till en punkt"
+    },
+    {
+      "en": "Show data points only",
+      "de": "Nur Daten-Punkte anzeigen",
+      "it": "Mostra solo punti dati",
+      "ro": "Afișați doar puncte de date",
+      "se": "Visa endast datapunkter"
+    },
+    {
+      "en": "Show error bars",
+      "de": "Fehlerbalken anzeigen",
+      "it": "Mostra barre di errore",
+      "ro": "Afișează bare de eroare",
+      "se": "Visa felstaplar"
+    },
+    {
+      "en": "Legal Agreement",
+      "de": "Rechtliches Übereinkommen",
+      "it": "Accordo Legale",
+      "ro": "Intelegere Legala",
+      "se": "Laglig Överenskommelse"
+    },
+    {
+      "en": "We use „HTML5 local storage” to save and restore your settings. 3rd parties will never see your data. Note we not use „cookies” at all.",
+      "de": "Wir verwenden „HTML5 local storage”, um Ihre Einstellungen zu speichern und wiederherzustellen. Dritte werden Ihre Daten niemals sehen. Beachten Sie, dass wir keine „Cookies” verwenden.",
+      "it": "Utilizziamo „HTML5 local storage” per salvare e ripristinare le tue impostazioni. Le terze parti non vedranno mai i tuoi dati. Nota che non utilizziamo affatto „cookie”.",
+      "ro": "Folosim „HTML5 local storage” pentru a salva și restaura setările. Părțile terțe nu vă vor vedea niciodată datele. Rețineți că nu folosim deloc „cookie-uri”.",
+      "se": "Vi använder „HTML5 local storage” för att spara och återställa dina inställningar. Tredje parter kommer aldrig att se dina data. Observera att vi inte använder „cookies” alls."
+    },
+    {
+      "en": "Find out more",
+      "de": "Erfahren Sie mehr",
+      "it": "Scopri di più",
+      "ro": "Aflați mai multe aici",
+      "se": "Ta reda på mer"
+    },
+    {
+      "en": "here",
+      "de": "hier",
+      "it": "qui",
+      "ro": "aici",
+      "se": "här"
+    },
+    {
+      "en": "https://en.wikipedia.org/wiki/Web_storage",
+      "de": "https://de.wikipedia.org/wiki/Web_Storage",
+      "it": "https://en.wikipedia.org/wiki/Web_storage",
+      "ro": "https://en.wikipedia.org/wiki/Web_storage",
+      "se": "https://en.wikipedia.org/wiki/Web_storage"
+    },
+    {
+      "en": "Accept and continue",
+      "de": "Akzeptieren und weiter",
+      "it": "Accetta e continua",
+      "ro": "Acceptați și continuați",
+      "se": "Acceptera och fortsätt"
     }
   ]
 }
