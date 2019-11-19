@@ -16,6 +16,7 @@
     "@material-ui/pickers": "^3.2.4",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.1",
+    "deep-equal": "^1.1.1",
     "ol": "^6.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
+    "@types/deep-equal": "^1.0.1",
     "@types/enzyme": "^3.1.17",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/geojson": "^7946.0.5",

@@ -1,10 +1,8 @@
-import {  OlVectorLayer } from '../components/ol/types';
+import deepEqual from 'deep-equal';
 
-
-import { DataState, newDataState } from '../states/dataState';
+import { OlVectorLayer } from '../components/ol/types';
 import { storeUserServers } from '../states/userSettings';
-import deepEqual  from 'deep-equal';
-import { DataState, newDataState, storeUserServers } from '../states/dataState';
+import { DataState, newDataState } from '../states/dataState';
 import {
     CONFIGURE_SERVERS,
     ADD_USER_PLACE,
@@ -17,8 +15,8 @@ import {
 } from '../actions/dataActions';
 import { MAP_OBJECTS } from '../states/controlState';
 import { newId } from '../util/id';
-import { Place } from "../model/place";
-import { TimeSeries, TimeSeriesGroup } from "../model/timeSeries";
+import { Place } from '../model/place';
+import { TimeSeries, TimeSeriesGroup } from '../model/timeSeries';
 
 
 export function dataReducer(state: DataState, action: DataAction): DataState {

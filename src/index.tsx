@@ -6,8 +6,7 @@ import thunk from 'redux-thunk';
 import * as ReduxLogger from 'redux-logger';
 
 import { appReducer } from './reducers/appReducer';
-import { updateDatasets, updateColorBars, updateServerInfo } from './actions/dataActions';
-import { updateDatasets, updateColorBars, updateDatasetsDelta } from './actions/dataActions';
+import { updateDatasets, updateColorBars, updateServerInfo, updateDatasetsDelta } from './actions/dataActions';
 import { changeLocale } from "./actions/controlActions";
 import App from './connected/App';
 import registerServiceWorker from './registerServiceWorker';

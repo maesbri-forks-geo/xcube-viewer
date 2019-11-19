@@ -1,5 +1,10 @@
 ## Changes in version 0.2.2 (in development)
 
+### Enhancements
+
+* Querying the server for configuration changes then update datasets and variables accordingly. (#15)
+* It is now possible to adjust the color bar min/max value and the colors. (#29)
+
 
 ## Changes in version 0.2.1
 
@@ -9,7 +14,6 @@
   By default it is off now, so that crisp image pixels are shown without any blurring. (#86)
 * The color bar legend uses 5 tick marks instead of the two.
 * Added simple scale indicator to map.
-* It is now possible to adjust the color bar min/max value and the colors. (#29)
 
 ### Other changes
 
