@@ -16,16 +16,10 @@ import ControlBarItem from './ControlBarItem';
 
 const styles = (theme: Theme) => createStyles(
     {
-        formControl: {
-            marginRight: theme.spacing(2),
-            marginBottom: theme.spacing(1),
-            minWidth: 120,
+        select: {
+            minWidth: '5em',
         },
         button: {
-            // margin: theme.spacing(0.1),
-        },
-        margin: {
-            margin: theme.spacing(1),
         },
     });
 
@@ -37,20 +31,20 @@ interface PlaceSelectProps extends WithStyles<typeof styles>, WithLocale {
     selectedPlaceId: string | null;
     places: Place[];
     placeLabels: string[];
-    selectPlace: (placeId: string | null, dataset: Dataset[], userPlaceGroup: PlaceGroup) => void;
-    removeUserPlace: (placeId: string) => void;
+    selectPlace: (placeId: string | null, places: Place[], showInMap: boolean) => void;
+    removeUserPlace: (placeId: string, places: Place[]) => void;
 }
 
 class PlaceSelect extends React.Component<PlaceSelectProps> {
 
     handlePlaceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        this.props.selectPlace(event.target.value || null, this.props.datasets, this.props.userPlaceGroup);
+        this.props.selectPlace(event.target.value || null, this.props.places, true);
     };
 
     handleRemoveButtonClick = (event: React.MouseEvent<HTMLElement>) => {
-        const {removeUserPlace, selectedPlaceId} = this.props;
+        const {removeUserPlace, selectedPlaceId, places} = this.props;
         if (selectedPlaceId !== null) {
-            removeUserPlace(selectedPlaceId);
+            removeUserPlace(selectedPlaceId, places);
         }
     };
 
@@ -82,6 +76,7 @@ class PlaceSelect extends React.Component<PlaceSelectProps> {
                 input={<Input name="place" id="place-select"/>}
                 displayEmpty
                 name="place"
+                className={classes.select}
             >
                 {places.map((place, i) => (
                     <MenuItem
@@ -101,7 +96,6 @@ class PlaceSelect extends React.Component<PlaceSelectProps> {
             <IconButton
                 className={classes.button}
                 disabled={!removeEnabled}
-                aria-label={I18N.get('Delete place')}
                 onClick={this.handleRemoveButtonClick}
             >
                 {<RemoveCircleOutlineIcon/>}
