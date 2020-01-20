@@ -49,7 +49,7 @@ export function updateServerInfo() {
                dispatch(_updateServerInfo(serverInfo));
            })
            .catch(error => {
-               dispatch(postMessage('error', error + ''));
+               dispatch(postMessage('error', error));
            })
            // 'then' because Microsoft Edge does not understand method finally
            .then(() => {
@@ -88,7 +88,7 @@ export function updateDatasets() {
                }
            })
            .catch(error => {
-               dispatch(postMessage('error', error + ''));
+               dispatch(postMessage('error', error));
            })
            // 'then' because Microsoft Edge does not yet understand keyword "finally"
            .then(() => {
@@ -243,7 +243,7 @@ export function addTimeSeries() {
             getTimeSeriesChunk()
                 .then(successAction)
                 .catch((error: any) => {
-                    dispatch(postMessage('error', error + ''));
+                    dispatch(postMessage('error', error));
                 });
         }
     };
@@ -347,7 +347,7 @@ export function updateColorBars() {
                dispatch(_updateColorBars(colorBars));
            })
            .catch(error => {
-               dispatch(postMessage('error', error.message || `${error}`));
+               dispatch(postMessage('error', error));
            });
     };
 }

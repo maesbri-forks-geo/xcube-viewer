@@ -1,6 +1,9 @@
 import deepEqual from 'deep-equal';
 
 import { OlVectorLayer } from '../components/ol/types';
+import { default as OlVectorLayer } from 'ol/layer/Vector';
+
+import { DataState, newDataState } from '../states/dataState';
 import { storeUserServers } from '../states/userSettings';
 import { DataState, newDataState } from '../states/dataState';
 import {
@@ -19,8 +22,8 @@ import { Place } from '../model/place';
 import { TimeSeries, TimeSeriesGroup } from '../model/timeSeries';
 
 
-export function dataReducer(state: DataState, action: DataAction): DataState {
-    if (typeof state === 'undefined') {
+export function dataReducer(state: DataState | undefined, action: DataAction): DataState {
+    if (state === undefined) {
         state = newDataState();
     }
     switch (action.type) {
@@ -88,7 +91,7 @@ export function dataReducer(state: DataState, action: DataAction): DataState {
         }
         case REMOVE_USER_PLACE: {
             const {id} = action;
-            const index = state.userPlaceGroup.features.findIndex(p => p.id == id);
+            const index = state.userPlaceGroup.features.findIndex(p => p.id === id);
             if (index >= 0) {
                 removeUserPlacesFromLayer([id]);
                 const features = [...state.userPlaceGroup.features];
@@ -158,7 +161,7 @@ export function dataReducer(state: DataState, action: DataAction): DataState {
         }
     }
 
-    return state;
+    return state!;
 }
 
 

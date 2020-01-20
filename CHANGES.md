@@ -1,10 +1,34 @@
-## Changes in version 0.2.2 (in development)
+## Changes in version 0.4.0 (in development)
+
+### Enhancements
+
+* Notification "snackbars" will now disappear after 5 seconds (#107).
+
+## Changes in version 0.3.2
+
+### Enhancements
+
+* It is now possible to change the base map layer from settings. (#30)
+* Different deployments can now be configured through `.env.local` file. (#24)
+
+### Other changes
+
+* Updated code to use latest React 16.8 features i.e. `React.FC` with hooks (#111)
+
+## Changes in version 0.3.1
+
+Fixed translation of legal agreement.
+
+## Changes in version 0.3.0
 
 ### Enhancements
 
 * Querying the server for configuration changes then update datasets and variables accordingly. (#15)
 * It is now possible to adjust the color bar min/max value and the colors. (#29)
 
+### Other changes
+
+* Now requires xcube 0.3.0 as backend.
 
 ## Changes in version 0.2.1
 
