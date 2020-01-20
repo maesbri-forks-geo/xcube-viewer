@@ -1,11 +1,8 @@
 import deepEqual from 'deep-equal';
 
-import { OlVectorLayer } from '../components/ol/types';
 import { default as OlVectorLayer } from 'ol/layer/Vector';
-
 import { DataState, newDataState } from '../states/dataState';
 import { storeUserServers } from '../states/userSettings';
-import { DataState, newDataState } from '../states/dataState';
 import {
     CONFIGURE_SERVERS,
     ADD_USER_PLACE,

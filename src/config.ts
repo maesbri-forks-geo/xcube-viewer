@@ -20,6 +20,9 @@ import lang from './resources/lang.json';
 
 const version = '0.4.0-dev.0';
 
+// every 10 seconds ask server for updates
+const viewerUpdateInterval = 10000;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 interface Branding {
@@ -125,11 +128,11 @@ const apiServers = [
 ];
 
 
-export function getVersion() {
+export function getVersion(): string {
     return version;
 }
 
-export function getBrandingName() {
+export function getBrandingName(): string {
     return brandingName;
 }
 
@@ -186,3 +189,8 @@ const tileAccess: { [name:string]: TileAccess } = {
 export function getTileAccess(groupName: string) {
     return tileAccess[groupName];
 }
+
+export function getViewerUpdateInterval(): number {
+    return viewerUpdateInterval;
+}
+

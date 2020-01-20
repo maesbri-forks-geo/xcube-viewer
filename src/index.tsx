@@ -11,7 +11,7 @@ import { changeLocale } from "./actions/controlActions";
 import App from './connected/App';
 import * as serviceWorker from './serviceWorker';
 import { getCurrentLocale } from "./util/lang";
-import { VIEWER_UPDATE_INTERVAL } from './config';
+import { getViewerUpdateInterval } from './config';
 
 import './index.css';
 import { I18N } from "./config";
@@ -38,15 +38,16 @@ ReactDOM.render(
     document.getElementById('root') as HTMLElement
 );
 
+const updateDatasetsDeltaCallback = () => {
+    window.setTimeout(() => {
+        store.dispatch(updateDatasetsDelta(updateDatasetsDeltaCallback) as any);
+    }, getViewerUpdateInterval());
+};
+
+updateDatasetsDeltaCallback();
+
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-const updateDatasetsDeltaCallback = () => {
-    window.setTimeout(() => {
-        store.dispatch(updateDatasetsDelta(updateDatasetsDeltaCallback) as any);
-    }, VIEWER_UPDATE_INTERVAL);
-};
-
-updateDatasetsDeltaCallback();
